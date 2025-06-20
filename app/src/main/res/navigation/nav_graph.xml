@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ana_Sayfa">
+
+    <fragment
+        android:id="@+id/ana_Sayfa"
+        android:name="com.example.yemek_kitabim.Ana_Sayfa"
+        android:label="fragment_ana__sayfa"
+        tools:layout="@layout/fragment_ana__sayfa" >
+        <action
+            android:id="@+id/action_ana_Sayfa_to_yemek_Listesi"
+            app:destination="@id/yemek_Listesi" />
+    </fragment>
+    <fragment
+        android:id="@+id/yemek_Listesi"
+        android:name="com.example.yemek_kitabim.Yemek_Listesi"
+        android:label="fragment_yemek__listesi"
+        tools:layout="@layout/fragment_yemek__listesi" >
+        <action
+            android:id="@+id/action_yemek_Listesi_to_yemek_Bilgi"
+            app:destination="@id/yemek_Bilgi" />
+        <argument
+            android:name="yemek_turu"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/yemek_Bilgi"
+        android:name="com.example.yemek_kitabim.Yemek_Bilgi"
+        android:label="fragment_yemek__bilgi"
+        tools:layout="@layout/fragment_yemek__bilgi" />
+</navigation>
