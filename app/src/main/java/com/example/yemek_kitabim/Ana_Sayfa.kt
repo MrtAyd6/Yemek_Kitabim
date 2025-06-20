@@ -29,7 +29,7 @@ class Ana_Sayfa : Fragment() {
         binding.Yemek.setOnClickListener { listeye_gec(it,"yemek") }
         binding.Tatli.setOnClickListener { listeye_gec(it,"tatli") }
         binding.Kahve.setOnClickListener { listeye_gec(it,"kahve") }
-        binding.Hamurisi.setOnClickListener { listeye_gec(it,"hamurisi") }
+        binding.Aperatif.setOnClickListener { listeye_gec(it,"aperatif") }
     }
 
     fun listeye_gec(view: View,id: String){
