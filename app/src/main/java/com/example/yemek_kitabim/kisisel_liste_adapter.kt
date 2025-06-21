@@ -1,14 +1,13 @@
 package com.example.yemek_kitabim
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yemek_kitabim.databinding.YemekSatirBinding
 
-class Yemekler_adapter(private val yemek_liste: ArrayList<Tarif>) : RecyclerView.Adapter<Yemekler_adapter.TarifHolder>() {
-    class TarifHolder(val binding : YemekSatirBinding) : RecyclerView.ViewHolder(binding.root) {}
+class kisisel_liste_adapter(private val yemek_liste : ArrayList<Tarif>): RecyclerView.Adapter<kisisel_liste_adapter.TarifHolder>() {
+    class TarifHolder(val binding: YemekSatirBinding) : RecyclerView.ViewHolder(binding.root) {}
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -25,13 +24,8 @@ class Yemekler_adapter(private val yemek_liste: ArrayList<Tarif>) : RecyclerView
         position: Int
     ) {
         holder.binding.yemekAdi.text = yemek_liste[position].isim
-        holder.binding.yemekAdi.setOnClickListener { yemek_detay(it, yemek_liste[position]) }
     }
 
-    fun yemek_detay(view: View, yemek : Tarif){
-        val action = Yemek_ListesiDirections.actionYemekListesiToYemekBilgi(yemek)
-        Navigation.findNavController(view).navigate(action)
-    }
 
 
 

@@ -29,6 +29,8 @@ class Ana_Sayfa : Fragment() {
         binding.Tatli.setOnClickListener { listeye_gec(it,"tatli") }
         binding.Kahve.setOnClickListener { listeye_gec(it,"kahve") }
         binding.Aperatif.setOnClickListener { listeye_gec(it,"aperatif") }
+
+        binding.benimKitabim.setOnClickListener { kitaba_gec(it) }
     }
 
     fun listeye_gec(view: View,id: String){
@@ -36,7 +38,10 @@ class Ana_Sayfa : Fragment() {
         Navigation.findNavController(view).navigate(action)
     }
 
-
+    fun kitaba_gec(view: View){
+        val action = Ana_SayfaDirections.actionAnaSayfaToBenimListem()
+        Navigation.findNavController(view).navigate(action)
+    }
 
 
     override fun onDestroyView() {

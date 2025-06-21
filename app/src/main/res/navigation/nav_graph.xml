@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_ana_Sayfa_to_yemek_Listesi"
             app:destination="@id/yemek_Listesi" />
+        <action
+            android:id="@+id/action_ana_Sayfa_to_benim_listem"
+            app:destination="@id/benim_listem" />
     </fragment>
     <fragment
         android:id="@+id/yemek_Listesi"
@@ -34,5 +37,18 @@
         <argument
             android:name="yemek"
             app:argType="com.example.yemek_kitabim.Tarif" />
+        <argument
+            android:name="kisisel"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/benim_listem"
+        android:name="com.example.yemek_kitabim.benim_listem"
+        android:label="fragment_benim_listem"
+        tools:layout="@layout/fragment_benim_listem" >
+        <action
+            android:id="@+id/action_benim_listem_to_yemek_Bilgi"
+            app:destination="@id/yemek_Bilgi" />
     </fragment>
 </navigation>
