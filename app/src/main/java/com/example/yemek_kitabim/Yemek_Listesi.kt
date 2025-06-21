@@ -6,13 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.ActionMode
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.yemek_kitabim.databinding.FragmentAnaSayfaBinding
 import com.example.yemek_kitabim.databinding.FragmentYemekListesiBinding
-import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.awaitAll
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +19,7 @@ class Yemek_Listesi : Fragment() {
     private var _binding: FragmentYemekListesiBinding? = null
     private val binding get() = _binding!!
     private lateinit var yemek_turu : String
-    private var tarifler : List<Tarif>? = null
+    private var tarifler = ArrayList<Tarif>()
     private var adapter : Yemekler_adapter? = null
 
     override fun onCreateView(
@@ -50,12 +45,18 @@ class Yemek_Listesi : Fragment() {
         api.getTarifler().enqueue(object : Callback<List<Tarif>> {
             override fun onResponse(call: Call<List<Tarif>>,response: Response<List<Tarif>>){
                 if(response.isSuccessful){
-                    tarifler = response.body()
+                    tarifler.clear()
+                    for (yemek in response.body()!!){
+                        if(yemek.tur == yemek_turu){
+                            tarifler.add(yemek)
+                        }
+                    }
 
                     //recyclerviewda göster
-                    adapter = Yemekler_adapter(tarifler!!)
+                    adapter = Yemekler_adapter(tarifler)
                     binding.yemekListesiRecycler.layoutManager = LinearLayoutManager(requireContext())
                     binding.yemekListesiRecycler.adapter = adapter
+
                 }
             }
 

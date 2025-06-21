@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.yemek_kitabim.databinding.FragmentYemekBilgiBinding
-import com.example.yemek_kitabim.databinding.FragmentYemekListesiBinding
-import kotlinx.serialization.Serializable
 
 class Yemek_Bilgi : Fragment() {
     private var _binding: FragmentYemekBilgiBinding? = null
