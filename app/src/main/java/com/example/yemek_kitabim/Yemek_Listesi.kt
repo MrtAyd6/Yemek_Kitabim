@@ -11,6 +11,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.yemek_kitabim.databinding.FragmentAnaSayfaBinding
 import com.example.yemek_kitabim.databinding.FragmentYemekListesiBinding
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.awaitAll
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +42,7 @@ class Yemek_Listesi : Fragment() {
             yemek_turu = Yemek_ListesiArgs.fromBundle(it).yemekTuru
         }
 
-        val retrofit = Retrofit.Builder().baseUrl("http://192.168.53.79/").addConverterFactory(
+        val retrofit = Retrofit.Builder().baseUrl("http://192.168.154.79/").addConverterFactory(
             GsonConverterFactory.create()).build()
 
         val api = retrofit.create(TariflerApi::class.java)
@@ -63,6 +65,8 @@ class Yemek_Listesi : Fragment() {
         })
 
 
+
+
         /*
         api.tarif_ekle("images/menemen.jpg","menemen","sogan, yumurta, domates","asdasdadasdasdada").enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String?>, response: Response<String?>) {
@@ -77,6 +81,7 @@ class Yemek_Listesi : Fragment() {
 
 
     }
+
 
 
 

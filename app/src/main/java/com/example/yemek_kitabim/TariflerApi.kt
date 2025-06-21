@@ -10,6 +10,7 @@ interface TariflerApi {
     @FormUrlEncoded
     @POST("yemek_ekle.php")
     fun tarif_ekle(
+        @Field("tur") tur : String,
         @Field("gorsel") gorsel : String,
         @Field("isim") isim: String,
         @Field("malzemeler") malzemeler: String,

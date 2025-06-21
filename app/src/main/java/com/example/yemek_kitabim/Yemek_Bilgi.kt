@@ -5,18 +5,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.bumptech.glide.Glide
+import com.example.yemek_kitabim.databinding.FragmentYemekBilgiBinding
+import com.example.yemek_kitabim.databinding.FragmentYemekListesiBinding
+import kotlinx.serialization.Serializable
 
 class Yemek_Bilgi : Fragment() {
-
+    private var _binding: FragmentYemekBilgiBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var yemek : Tarif
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_yemek__bilgi, container, false)
+        _binding = FragmentYemekBilgiBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            yemek = Yemek_BilgiArgs.fromBundle(it).yemek
+        }
+
+        val gorsel_url = "http://192.168.154.79:80/" + yemek.gorsel
+        Glide.with(this).load(gorsel_url).into(binding.yemekGorsel)
+
+        binding.yemekAdi.text = yemek.isim
+        binding.malzemeler.text = yemek.malzemeler
+        binding.tarif.text = yemek.yapilis
+
+
+
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

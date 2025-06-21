@@ -30,5 +30,9 @@
         android:id="@+id/yemek_Bilgi"
         android:name="com.example.yemek_kitabim.Yemek_Bilgi"
         android:label="fragment_yemek__bilgi"
-        tools:layout="@layout/fragment_yemek__bilgi" />
+        tools:layout="@layout/fragment_yemek__bilgi" >
+        <argument
+            android:name="yemek"
+            app:argType="com.example.yemek_kitabim.Tarif" />
+    </fragment>
 </navigation>
