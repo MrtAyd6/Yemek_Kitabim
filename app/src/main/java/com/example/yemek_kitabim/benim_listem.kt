@@ -1,24 +1,21 @@
 package com.example.yemek_kitabim
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.yemek_kitabim.databinding.FragmentBenimListemBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.coroutines.launch
 
 
 class benim_listem : Fragment() {
     private var _binding : FragmentBenimListemBinding? = null
     private val binding get() = _binding!!
-    private var tarifler = ArrayList<Tarif>()
+    private lateinit var tarifler: List<Yemek>
     private var adapter : kisisel_liste_adapter? = null
 
 
@@ -34,31 +31,32 @@ class benim_listem : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val retrofit = Retrofit.Builder().baseUrl("http://192.168.154.79/").addConverterFactory(
-            GsonConverterFactory.create()).build()
+        val db = TarifVeritabani.getDatabase(requireContext())
+        val dao = db.yemekDao()
 
-        val api = retrofit.create(KisiselTariflerApi::class.java)
+        lifecycleScope.launch {
+            tarifler = dao.tumTarifleriGetir()
+            adapter = kisisel_liste_adapter(tarifler)
+            binding.kisiselRecycler.layoutManager = LinearLayoutManager(requireContext())
+            binding.kisiselRecycler.adapter = adapter
+        }
 
-        api.getTarifler().enqueue(object : Callback<List<Tarif>> {
-            override fun onResponse(call: Call<List<Tarif>>,response: Response<List<Tarif>>){
-                if(response.isSuccessful){
-                    tarifler.clear()
-                    for (yemek in response.body()!!){
-                        tarifler.add(yemek)
+        binding.tarifEkleButton.setOnClickListener { tarif_ekle(it) }
 
-                    //recyclerviewda göster
-                    adapter = kisisel_liste_adapter(tarifler)
-                    binding.kisiselRecycler.layoutManager = LinearLayoutManager(requireContext())
-                    binding.kisiselRecycler.adapter = adapter
+    }
 
-                    }
-                }
-            }
+    private fun tarif_ekle(view: View){
+        val action = benim_listemDirections.actionBenimListemToTarifEkle()
+        Navigation.findNavController(view).navigate(action)
+    }
 
-            override fun onFailure(call : Call<List<Tarif>>, t: Throwable) {
-                Log.e("API", "Hata: ${t.message}")
 
-            }
-        })
+
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

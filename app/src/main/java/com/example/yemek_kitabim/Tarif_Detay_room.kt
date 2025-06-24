@@ -6,18 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.example.yemek_kitabim.databinding.FragmentTarifDetayRoomBinding
 import com.example.yemek_kitabim.databinding.FragmentYemekBilgiBinding
 
-class Yemek_Bilgi : Fragment() {
-    private var _binding: FragmentYemekBilgiBinding? = null
+
+class Tarif_Detay_room : Fragment() {
+    private var _binding : FragmentTarifDetayRoomBinding? = null
     private val binding get() = _binding!!
-    private lateinit var yemek : Tarif
+    private lateinit var yemek : Yemek
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentYemekBilgiBinding.inflate(inflater, container, false)
+        _binding = FragmentTarifDetayRoomBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
@@ -25,19 +33,18 @@ class Yemek_Bilgi : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            yemek = Yemek_BilgiArgs.fromBundle(it).yemek
+            yemek = Tarif_Detay_roomArgs.fromBundle(it).yemek
         }
-
-        val gorsel_url = "http://192.168.72.79:80/" + yemek.gorsel
-        Glide.with(this).load(gorsel_url).into(binding.yemekGorsel)
+        val gorselUrl = yemek.gorsel
+        Glide.with(this).load(gorselUrl).into(binding.yemekGorsel)
 
         binding.yemekAdi.text = yemek.isim
         binding.malzemeler.text = yemek.malzemeler
-        binding.tarif.text = yemek.yapilis
-
+        binding.tarif.text = yemek.tarif
 
 
     }
+
 
 
     override fun onDestroyView() {

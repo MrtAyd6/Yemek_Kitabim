@@ -37,7 +37,7 @@ class Yemek_Listesi : Fragment() {
             yemek_turu = Yemek_ListesiArgs.fromBundle(it).yemekTuru
         }
 
-        val retrofit = Retrofit.Builder().baseUrl("http://192.168.154.79/").addConverterFactory(
+        val retrofit = Retrofit.Builder().baseUrl("http://192.168.72.79/").addConverterFactory(
             GsonConverterFactory.create()).build()
 
         val api = retrofit.create(TariflerApi::class.java)
