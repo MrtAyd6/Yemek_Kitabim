@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.view
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.yemek_kitabim.model.Tarif
+import com.example.yemek_kitabim.model.TariflerApi
+import com.example.yemek_kitabim.adapter.Yemekler_adapter
 import com.example.yemek_kitabim.databinding.FragmentYemekListesiBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,7 +46,7 @@ class Yemek_Listesi : Fragment() {
         val api = retrofit.create(TariflerApi::class.java)
 
         api.getTarifler().enqueue(object : Callback<List<Tarif>> {
-            override fun onResponse(call: Call<List<Tarif>>,response: Response<List<Tarif>>){
+            override fun onResponse(call: Call<List<Tarif>>, response: Response<List<Tarif>>){
                 if(response.isSuccessful){
                     tarifler.clear()
                     for (yemek in response.body()!!){

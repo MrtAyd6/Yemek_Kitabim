@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.model
 
 import retrofit2.Call
 import retrofit2.http.*

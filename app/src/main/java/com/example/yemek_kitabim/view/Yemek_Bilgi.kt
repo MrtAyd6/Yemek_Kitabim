@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,26 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.yemek_kitabim.databinding.FragmentTarifDetayRoomBinding
+import com.example.yemek_kitabim.model.Tarif
 import com.example.yemek_kitabim.databinding.FragmentYemekBilgiBinding
 
-
-class Tarif_Detay_room : Fragment() {
-    private var _binding : FragmentTarifDetayRoomBinding? = null
+class Yemek_Bilgi : Fragment() {
+    private var _binding: FragmentYemekBilgiBinding? = null
     private val binding get() = _binding!!
-    private lateinit var yemek : Yemek
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private lateinit var yemek : Tarif
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTarifDetayRoomBinding.inflate(inflater, container, false)
+        _binding = FragmentYemekBilgiBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
@@ -33,18 +26,19 @@ class Tarif_Detay_room : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            yemek = Tarif_Detay_roomArgs.fromBundle(it).yemek
+            yemek = Yemek_BilgiArgs.fromBundle(it).yemek
         }
-        val gorselUrl = yemek.gorsel
-        Glide.with(this).load(gorselUrl).into(binding.yemekGorsel)
+
+        val gorsel_url = "http://192.168.72.79:80/" + yemek.gorsel
+        Glide.with(this).load(gorsel_url).into(binding.yemekGorsel)
 
         binding.yemekAdi.text = yemek.isim
         binding.malzemeler.text = yemek.malzemeler
-        binding.tarif.text = yemek.tarif
+        binding.tarif.text = yemek.yapilis
+
 
 
     }
-
 
 
     override fun onDestroyView() {

@@ -1,14 +1,8 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.view
 
-import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
-import com.example.yemek_kitabim.databinding.FragmentBenimListemBinding
+import com.example.yemek_kitabim.R
+import com.example.yemek_kitabim.model.TarifVeritabani
+import com.example.yemek_kitabim.model.Yemek
 import com.example.yemek_kitabim.databinding.FragmentTarifEkleBinding
 import kotlinx.coroutines.launch
 import java.io.File
@@ -36,17 +32,16 @@ class TarifEkle : Fragment() {
     private var malzemeler : String = "a"
     private var yemekTarif : String = "a"
     private var kayitYolu : String = "a"
+    private lateinit var gorselUri : Uri
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle? ) {
         super.onCreate(savedInstanceState)
 
         gorselSecici = registerForActivityResult(ActivityResultContracts.GetContent()) {uri: Uri? ->
             uri?.let {
-                val dosyaAdi = "${yemekAdi.replace (" ","_")}.jpg"
-                kayitYolu = requireContext().kopyalaVeKaydet(it,dosyaAdi)
-
                 Glide.with(requireContext()).load(uri).into(binding.yemekGorsel)
+                gorselUri = uri
 
             }
         }
@@ -69,13 +64,7 @@ class TarifEkle : Fragment() {
     }
 
     private fun gorselSec(view: View){
-        val ad = binding.yemekAdiText.text.toString()
-        if(ad.isNotEmpty()){
-            yemekAdi = ad
-            gorselSecici.launch("image/*")
-        }else{
-            Toast.makeText(requireContext(),"Lütfen yemek adını girin", Toast.LENGTH_LONG).show()
-        }
+        gorselSecici.launch("image/*")
     }
 
     fun Context.kopyalaVeKaydet(uri: Uri, dosyaAdi: String): String{
@@ -91,21 +80,24 @@ class TarifEkle : Fragment() {
     }
 
     private fun tarif_ekle(view: View) {
-
+        
         yemekAdi = binding.yemekAdiText.text.toString()
         malzemeler = binding.malzemelerText.text.toString()
         yemekTarif = binding.tarifText.text.toString()
+        val dosyaAdi = "${yemekAdi.replace (" ","_")}.jpg"
+        kayitYolu = requireContext().kopyalaVeKaydet(gorselUri, dosyaAdi)
 
         val tarif = Yemek(0, "anayemek", kayitYolu, yemekAdi, malzemeler, yemekTarif)
-        val db = TarifVeritabani.getDatabase(requireContext())
+        val db = TarifVeritabani.Companion.getDatabase(requireContext())
         val dao = db.yemekDao()
 
         lifecycleScope.launch {
 
             dao.tarifEkle(tarif)
             Toast.makeText(requireContext(),"Tarif eklendi", Toast.LENGTH_LONG).show()
+            val navOps = NavOptions.Builder().setPopUpTo(R.id.benim_listem,true).build()
             val action = TarifEkleDirections.actionTarifEkleToBenimListem()
-            Navigation.findNavController(view).navigate(action)
+            Navigation.findNavController(view).navigate(action,navOps)
         }
     }
 

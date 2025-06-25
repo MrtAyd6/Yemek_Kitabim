@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yemek_kitabim.databinding.YemekSatirBinding
+import com.example.yemek_kitabim.model.Tarif
+import com.example.yemek_kitabim.view.Yemek_ListesiDirections
 
 class Yemekler_adapter(private val yemek_liste: ArrayList<Tarif>) : RecyclerView.Adapter<Yemekler_adapter.TarifHolder>() {
     class TarifHolder(val binding : YemekSatirBinding) : RecyclerView.ViewHolder(binding.root) {}

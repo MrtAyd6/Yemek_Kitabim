@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

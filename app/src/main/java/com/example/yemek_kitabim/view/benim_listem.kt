@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.yemek_kitabim.model.TarifVeritabani
+import com.example.yemek_kitabim.model.Yemek
 import com.example.yemek_kitabim.databinding.FragmentBenimListemBinding
+import com.example.yemek_kitabim.adapter.kisisel_liste_adapter
 import kotlinx.coroutines.launch
 
 
@@ -31,7 +34,7 @@ class benim_listem : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val db = TarifVeritabani.getDatabase(requireContext())
+        val db = TarifVeritabani.Companion.getDatabase(requireContext())
         val dao = db.yemekDao()
 
         lifecycleScope.launch {

@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.model
 
 class TarifRepository(private val dao: YemekDao) {
     suspend fun tarifEkle(yemek: Yemek) = dao.tarifEkle(yemek)

@@ -1,4 +1,4 @@
-package com.example.yemek_kitabim
+package com.example.yemek_kitabim.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
